@@ -11,25 +11,6 @@ def escolher_arquivo():
     caminho_arquivo = filedialog.askopenfilename()
     return caminho_arquivo
 
-# lê o objeto json do documento escolhido
-
-def ler_arquivo(caminho_arquivo):
-    with open(caminho_arquivo, 'r') as f:
-        dados = json.load(f)
-    return dados
-    
-# {
-#     "uid": "t5318n64i",
-#     "type": "core_logger",
-#     "data": {
-#         "x": 4389,
-#         "y": 310,
-#         "message_type": "message_parsed_text",
-#         "message": "Status {{json msg.response.status}} : EAN {{msg.product_response.sku}} ID {{msg.product_response.id}}",
-#         "description": "Operação - Adobe Commerce - Integração de produto",
-#         "label": "Operação - Adobe Commerce - Integração de produto"
-#     }
-# }
 
 # função para acessar o tipo do objeto e verificar se é do tipo core_logger 
 def verificar_tipo_core_logger(objeto):
@@ -42,30 +23,49 @@ def ler_arquivos_json(diretorio):
     # Lista todos os arquivos no diretório
     arquivos = os.listdir(diretorio)
 
-    # Filtra apenas os arquivos .json
-    arquivos_json = [arquivo for arquivo in arquivos if arquivo.endswith('.json')]
     loggers_por_arquivo = {}  # Cria um dicionário vazio
-    # Itera sobre cada arquivo .json e lê seu conteúdo
-    for arquivo_json in arquivos_json:
-        caminho_arquivo = os.path.join(diretorio, arquivo_json)
+    
+    # obtem o tamanho da lista de arquivos 
+    tamanho = len(arquivos)
+    
+    for i in range(tamanho):
+        caminho_arquivo = os.path.join(diretorio, arquivos[i])
         with open(caminho_arquivo, 'r') as f:
             lista_dados = json.load(f)
         
-        loggers = []  # Cria uma lista vazia para armazenar os loggers deste arquivo
-        # Itera sobre cada dicionário na lista
+        loggers = []
         for dados in lista_dados:
-            # Agora você pode acessar 'nodes' em 'dados'
             for objeto in dados['nodes']:
                 if verificar_tipo_core_logger(objeto):
                     uid = objeto['uid']
                     tipo = objeto['type']
-                    # Usa o método get() para obter o label, ou 'Label não encontrado' se não existir
                     label = objeto['data'].get('label', 'Label não encontrado')
                     loggers.append({'uid': uid, 'type': tipo, 'label': label})
+        loggers_por_arquivo[arquivos[i]] = loggers
         
-        # Adiciona os loggers deste arquivo ao dicionário
-        loggers_por_arquivo[arquivo_json] = loggers
-    return loggers_por_arquivo
+    return loggers_por_arquivo 
+    
+    # # Itera sobre cada arquivo .json e lê seu conteúdo
+    # for arquivo_json in arquivos_json:
+    #     caminho_arquivo = os.path.join(diretorio, arquivo_json)
+    #     with open(caminho_arquivo, 'r') as f:
+    #         lista_dados = json.load(f)
+        
+    #     loggers = []  # Cria uma lista vazia para armazenar os loggers deste arquivo
+    #     # Itera sobre cada dicionário na lista
+    #     for dados in lista_dados:
+    #         # Agora você pode acessar 'nodes' em 'dados'
+    #         for objeto in dados['nodes']:
+    #             if verificar_tipo_core_logger(objeto):
+    #                 uid = objeto['uid']
+    #                 tipo = objeto['type']
+    #                 # Usa o método get() para obter o label, ou 'Label não encontrado' se não existir
+    #                 label = objeto['data'].get('label', 'Label não encontrado')
+    #                 loggers.append({'uid': uid, 'type': tipo, 'label': label})
+        
+    #     # Adiciona os loggers deste arquivo ao dicionário
+    #     loggers_por_arquivo[arquivo_json] = loggers
+    # return loggers_por_arquivo
 
 def ler_arquivo():
     caminho_arquivo = escolher_arquivo()  
@@ -98,14 +98,28 @@ def atualizar_loggers(loggers):
     data[loggers['arquivo']] = loggers['loggers']
     with open('loggers.json', 'w') as f:
         json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True)
+    print(f"Loggers atualizados.")
     return data
+
+def atualizar_loggers_com_diretorio():
+    try:
+        logs = ler_arquivos_json("./flows/")
+        for nome_arquivo, loggers in logs.items():
+            atualizar_loggers({'arquivo': nome_arquivo, 'loggers': loggers})
+        print(f"Loggers atualizados.")
+    except Exception as e:
+        print(f"Erro: {e}")
+
 
 try:
     diretorio = "./flows/"
-    logs = ler_arquivo()
-    atualizar_loggers(logs)
+    #logs = ler_arquivo()
+    #atualizar_loggers(logs)
     
-    print(f"Loggers atualizados.")
+    atualizar_loggers_com_diretorio()
+
+    
+    
     
 except Exception as e:
     print(f"Erro: {e}")
