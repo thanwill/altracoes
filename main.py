@@ -5,6 +5,12 @@ from pprint import pprint
 import os
 from venv import logger
 
+# script para instalar todas as dependências
+# pip freeze > requirements.txt
+# pip install -r requirements.txt
+# pip install --upgrade pip
+
+
 def escolher_arquivo():
     root = tk.Tk()
     root.withdraw()  # para esconder a janela principal
@@ -12,11 +18,6 @@ def escolher_arquivo():
     return caminho_arquivo
 
 # lê o objeto json do documento escolhido
-
-def ler_arquivo(caminho_arquivo):
-    with open(caminho_arquivo, 'r') as f:
-        dados = json.load(f)
-    return dados
     
 # {
 #     "uid": "t5318n64i",
