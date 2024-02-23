@@ -92,26 +92,20 @@ def ler_arquivo():
     dados['arquivo'] = nome_arquivo
     return dados
 
+def atualizar_loggers(loggers):
+    with open('loggers.json', 'r') as f:
+        data = json.load(f)
+    data[loggers['arquivo']] = loggers['loggers']
+    with open('loggers.json', 'w') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True)
+    return data
+
 try:
     diretorio = "./flows/"
+    logs = ler_arquivo()
+    atualizar_loggers(logs)
     
-    loggers = ler_arquivo()
-    
-            
-    # Carrega o conteúdo existente do arquivo, ou cria um dicionário vazio se o arquivo não existir
-    try:
-        with open('loggers.json', 'r') as f:
-            data = json.load(f)
-    except FileNotFoundError:
-        data = {}
-
-    # adiciona o novo objeto dado ao dicionário
-    data[loggers['arquivo']] = loggers['loggers']
-    
-
-    # Escreve tudo de volta para o arquivo
-    with open('loggers.json', 'w') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True)   
+    print(f"Loggers atualizados.")
     
 except Exception as e:
     print(f"Erro: {e}")
