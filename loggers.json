@@ -1,0 +1,56 @@
+{
+    "staging-upsert-de-produtos-em-lote-20240223123452": [
+        {
+            "label": "",
+            "type": "core_logger",
+            "uid": "t5318n64i"
+        },
+        {
+            "label": "Erro ao integrar o produto SKU {{msg.payload.ean}}",
+            "type": "core_logger",
+            "uid": "geiax32ao"
+        },
+        {
+            "label": "Payload de entrada do lote de produtos",
+            "type": "core_logger",
+            "uid": "4xl1msypu"
+        },
+        {
+            "label": "Retorno da aplicação do catálogo \"default\"",
+            "type": "core_logger",
+            "uid": "mq0wstrzm"
+        }
+    ],
+    "staging-upsert-de-produtos-em-lote-v2-20240223123454": [
+        {
+            "label": "Operação - Adobe Commerce - Integração de produto",
+            "type": "core_logger",
+            "uid": "t5318n64i"
+        },
+        {
+            "label": "Erro - Adobe Commerce - Integração de produto",
+            "type": "core_logger",
+            "uid": "geiax32ao"
+        },
+        {
+            "label": "Operação - ERP - Dados para a integração",
+            "type": "core_logger",
+            "uid": "4xl1msypu"
+        },
+        {
+            "label": "Operação - Adobe Commerce - Atualização do catálogo default",
+            "type": "core_logger",
+            "uid": "mq0wstrzm"
+        },
+        {
+            "label": "Erro - Adobe Commerce - Sistema indisponível, enfileirando",
+            "type": "core_logger",
+            "uid": "uce55ycez"
+        },
+        {
+            "label": "Operação - Floui - Validação de dados",
+            "type": "core_logger",
+            "uid": "fcbfzcgyu"
+        }
+    ]
+}

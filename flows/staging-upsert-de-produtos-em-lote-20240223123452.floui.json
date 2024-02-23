@@ -1,0 +1,997 @@
+{
+    "nodes": [
+        {
+            "uid": "ldusvjf8k",
+            "type": "core_http_in",
+            "trigger": true,
+            "data": {
+                "x": -1971,
+                "y": 327,
+                "method": "post",
+                "authentication": "bearer",
+                "uri": "/magento/staging/products/upsert",
+                "description": "POST /magento/staging/products/upsert",
+                "basic_auth_username": "{{var endpoints_username_staging}}",
+                "basic_auth_password": "{{var endpoints_password_staging}}",
+                "bearer_token": "{{var endpoints_token_staging}}"
+            }
+        },
+        {
+            "uid": "jhi4vsvqm",
+            "type": "data_json_schema_validator",
+            "data": {
+                "x": -1702,
+                "y": 327,
+                "content": "payload.body",
+                "validation_output_type": "simplified",
+                "schema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"Generated schema for Root\",\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"ean\": {\n        \"type\": \"string\"\n      },\n      \"codigo_roge\": {\n        \"type\": \"string\"\n      },\n      \"categorias\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"nome\": {\n        \"type\": \"string\"\n      },\n      \"status\": {\n        \"type\": \"string\"\n      },\n      \"descricao\": {\n        \"type\": \"string\"\n      },\n      \"preco_base\": {\n        \"type\": \"number\"\n      },\n      \"peso_bruto\": {\n        \"type\": \"number\"\n      },\n      \"altura\": {\n        \"type\": \"number\"\n      },\n      \"largura\": {\n        \"type\": \"number\"\n      },\n      \"comprimento\": {\n        \"type\": \"number\"\n      },\n      \"marca\": {\n        \"type\": \"string\"\n      },\n      \"ncm\": {\n        \"type\": \"string\"\n      },\n      \"kit_simples\": {\n        \"type\": \"string\"\n      },\n      \"items_kit_simples\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"venda_incremento_quantidade\": {\n        \"type\": \"number\"\n      },\n      \"loja\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      }\n    },\n    \"required\": [\n      \"ean\",\n      \"codigo_roge\",\n      \"categorias\",\n      \"nome\",\n      \"status\",\n      \"preco_base\",\n      \"peso_bruto\",\n      \"altura\",\n      \"largura\",\n      \"comprimento\",\n      \"ncm\",\n      \"kit_simples\"\n    ]\n  }\n}",
+                "description": "Valida dados de entrada",
+                "output_path": "validation"
+            }
+        },
+        {
+            "uid": "zj899shsa",
+            "type": "core_http_out",
+            "trigger": false,
+            "data": {
+                "x": -1219,
+                "y": 270,
+                "http_status": "400",
+                "content_type": "application/json",
+                "response_body": "{\n    \"success\": false,\n    \"errors\": {{json msg.validation.errors.map(e => e.message)}}\n}",
+                "description": "Retorno de erro"
+            }
+        },
+        {
+            "uid": "y1a3qb5ik",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": -1444,
+                "y": 286,
+                "expression": "msg.validation.errors.length",
+                "description": "Se existem erros"
+            }
+        },
+        {
+            "uid": "uok9c4h6i",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": -1445,
+                "y": 417,
+                "expression": "!msg.validation.errors.length",
+                "description": "Se não existem erros"
+            }
+        },
+        {
+            "uid": "7v5apixr2",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 2647,
+                "y": 310,
+                "expression": "!msg.payload.kit_simples",
+                "description": "Se é um produto simples"
+            }
+        },
+        {
+            "uid": "zcbl08epw",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 2649,
+                "y": 502,
+                "expression": "msg.payload.kit_simples",
+                "description": "Se é um kit simples"
+            }
+        },
+        {
+            "uid": "0h94s67vw",
+            "type": "service_magento_catalog_product_create",
+            "data": {
+                "x": 3109,
+                "y": 292,
+                "status": "custom",
+                "weight": "{{msg.payload.peso_bruto}}",
+                "bundle_price_view": "0",
+                "giftcard_type": "VIRTUAL",
+                "giftcard_lifetime": "365",
+                "giftcard_allow_open_amount": "0",
+                "giftcard_open_amount_min": "0",
+                "giftcard_allow_message": "0",
+                "visibility": "4",
+                "tax_class_id": "0",
+                "service_account_id": "6448127354a824ae0b5eb3f3",
+                "giftcard_amounts": "{}",
+                "custom_attributes": "{\"ifxefurel\":{\"field\":\"codigo_roge\",\"value\":\"{{msg.payload.codigo_roge}}\"},\"d32xunv72\":{\"field\":\"ncm\",\"value\":\"{{msg.payload.ncm}}\"},\"a01hznxxx\":{\"field\":\"marca\",\"value\":\"{{msg.payload.marca}}\"}}",
+                "configurable_attribute_options": "{}",
+                "image_gallery": "{}",
+                "type_id": "simple",
+                "attribute_set_id": "4",
+                "description": "Cadastra o produto no Magento",
+                "name": "{{msg.payload.nome}}",
+                "sku": "{{msg.payload.ean}}",
+                "price": "{{msg.payload.preco_base}}",
+                "special_price": "",
+                "stock_qty": "",
+                "stock_status": "1",
+                "product_description": "{{msg.payload.descricao}}",
+                "output_path": "product_response",
+                "custom_attributes_field_ifxefurel": "codigo_roge",
+                "custom_attributes_value_ifxefurel": "{{msg.payload.codigo_roge}}",
+                "custom_attributes_field_d32xunv72": "ncm",
+                "custom_attributes_value_d32xunv72": "{{msg.payload.ncm}}",
+                "custom_attributes_field_bymknj0bm": "color",
+                "custom_attributes_value_bymknj0bm": "{{msg.payload.cor}}",
+                "custom_attributes_field_jv4pbu03h": "tamanho",
+                "custom_attributes_value_jv4pbu03h": "{{msg.payload.tamanho}}",
+                "custom_attributes_field_a01hznxxx": "marca",
+                "custom_attributes_value_a01hznxxx": "{{msg.payload.marca}}",
+                "status_custom": "{{msg.payload.status.toLowerCase() == \"active\" ? 1 : 2}}",
+                "extension_attributes": "{\"l8qgd904m\":{\"field\":\"stock_item.enable_qty_increments\",\"value\":\"{{to_boolean msg.payload.venda_incremento_quantidade ? true : false}}\"},\"ozju6t1hw\":{\"field\":\"stock_item.qty_increments\",\"value\":\"{{to_int msg.payload.venda_incremento_quantidade}}\"},\"6i7wfje51\":{\"field\":\"stock_item.use_config_enable_qty_inc\",\"value\":\"0\"},\"emy7oksv6\":{\"field\":\"stock_item.use_config_qty_increments\",\"value\":\"0\"}}",
+                "extension_attributes_field_l8qgd904m": "stock_item.enable_qty_increments",
+                "extension_attributes_value_l8qgd904m": "{{to_boolean msg.payload.venda_incremento_quantidade ? true : false}}",
+                "extension_attributes_field_ozju6t1hw": "stock_item.qty_increments",
+                "extension_attributes_value_ozju6t1hw": "{{to_int msg.payload.venda_incremento_quantidade}}",
+                "extension_attributes_field_6i7wfje51": "stock_item.use_config_enable_qty_inc",
+                "extension_attributes_value_6i7wfje51": "0",
+                "extension_attributes_field_emy7oksv6": "stock_item.use_config_qty_increments",
+                "extension_attributes_value_emy7oksv6": "0",
+                "extension_attributes_field_9uqcappxd": "",
+                "extension_attributes_value_9uqcappxd": "",
+                "category_ids": "{{msg.payload.categorias.map((a) => { return msg.categoriesMap[a] }).join(',')}}",
+                "website_ids": "{{msg.payload.website_ids.join(',')}}"
+            }
+        },
+        {
+            "uid": "r4vxbpcom",
+            "type": "core_http_out",
+            "trigger": false,
+            "data": {
+                "x": -1215,
+                "y": 531,
+                "http_status": "201",
+                "content_type": "application/json",
+                "response_body": "{\n    \"success\": true,\n    \"errors\": []\n}",
+                "description": "Retorno de sucesso"
+            }
+        },
+        {
+            "uid": "3sqinr7a4",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 4132,
+                "y": 447,
+                "expression": "msg.product_response.id",
+                "description": "Se o produto foi criado corretamente"
+            }
+        },
+        {
+            "uid": "tukkxzrv3",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 4133,
+                "y": 584,
+                "expression": "!msg.product_response.id",
+                "description": "Se o produto não foi criado corretamente por alguma inconsistência"
+            }
+        },
+        {
+            "uid": "4svx3k1cg",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 3852,
+                "y": 511,
+                "expression": "msg.response.status < 500",
+                "description": "Se Magento respondeu corretamente"
+            }
+        },
+        {
+            "uid": "dvyhpvyng",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 3850,
+                "y": 751,
+                "expression": "!msg.response || (msg.response && msg.response.status >= 500)",
+                "description": "Se Magento está fora do ar no momento"
+            }
+        },
+        {
+            "uid": "hhec21eav",
+            "type": "core_queue_publisher",
+            "trigger": false,
+            "data": {
+                "x": 4082,
+                "y": 812,
+                "message_type": "message_parsed_text",
+                "message": "{{json msg.payload}}",
+                "is_delayed": "1",
+                "delay_seconds": "600",
+                "description": "Enfileira para retentativa após 10 minutos",
+                "queue_name": "product_upsert_retry"
+            }
+        },
+        {
+            "uid": "t5318n64i",
+            "type": "core_logger",
+            "data": {
+                "x": 4355,
+                "y": 429,
+                "message_type": "message_parsed_text",
+                "message": "Produto integrado: EAN {{msg.product_response.sku}} ID {{msg.product_response.id}}",
+                "description": "Log de sucesso"
+            }
+        },
+        {
+            "uid": "geiax32ao",
+            "type": "core_logger",
+            "data": {
+                "x": 4356,
+                "y": 565,
+                "message_type": "message_parsed_text",
+                "message": "{{json msg.product_response}}",
+                "description": "Log de erro",
+                "label": "Erro ao integrar o produto SKU {{msg.payload.ean}}"
+            }
+        },
+        {
+            "uid": "xr0rhkue2",
+            "type": "core_queue_consumer",
+            "trigger": true,
+            "data": {
+                "x": 1110,
+                "y": -16,
+                "queue_name": "product_upsert_retry",
+                "description": "Inicia retentativa de integração do produto"
+            }
+        },
+        {
+            "uid": "ztfl5it10",
+            "type": "core_joint",
+            "trigger": false,
+            "data": {
+                "x": 2366,
+                "y": 424
+            }
+        },
+        {
+            "uid": "z7h7hzxqi",
+            "type": "core_joint",
+            "trigger": false,
+            "data": {
+                "x": 3609,
+                "y": 622
+            }
+        },
+        {
+            "uid": "nf6z8wgoa",
+            "type": "service_magento_catalog_product_create",
+            "data": {
+                "x": 3117,
+                "y": 486,
+                "status": "custom",
+                "weight": "{{msg.payload.peso_bruto}}",
+                "bundle_price_view": "0",
+                "giftcard_type": "VIRTUAL",
+                "giftcard_lifetime": "365",
+                "giftcard_allow_open_amount": "0",
+                "giftcard_open_amount_min": "0",
+                "giftcard_allow_message": "0",
+                "visibility": "4",
+                "tax_class_id": "0",
+                "service_account_id": "6448127354a824ae0b5eb3f3",
+                "giftcard_amounts": "{}",
+                "custom_attributes": "{\"ifxefurel\":{\"field\":\"codigo_roge\",\"value\":\"{{msg.payload.codigo_roge}}\"},\"d32xunv72\":{\"field\":\"ncm\",\"value\":\"{{msg.payload.ncm}}\"},\"a01hznxxx\":{\"field\":\"marca\",\"value\":\"{{msg.payload.marca}}\"},\"2crctn949\":{\"field\":\"short_description\",\"value\":\"{{msg.short_description}}\"}}",
+                "configurable_attribute_options": "{}",
+                "image_gallery": "{}",
+                "type_id": "simple",
+                "attribute_set_id": "4",
+                "description": "Cadastra o produto no Magento",
+                "name": "{{msg.payload.nome}}",
+                "sku": "{{msg.payload.ean}}",
+                "price": "{{msg.payload.preco_base}}",
+                "special_price": "",
+                "stock_qty": "",
+                "stock_status": "1",
+                "product_description": "{{msg.payload.descricao}}",
+                "output_path": "product_response",
+                "custom_attributes_field_ifxefurel": "codigo_roge",
+                "custom_attributes_value_ifxefurel": "{{msg.payload.codigo_roge}}",
+                "custom_attributes_field_d32xunv72": "ncm",
+                "custom_attributes_value_d32xunv72": "{{msg.payload.ncm}}",
+                "custom_attributes_field_bymknj0bm": "color",
+                "custom_attributes_value_bymknj0bm": "{{msg.payload.cor}}",
+                "custom_attributes_field_jv4pbu03h": "tamanho",
+                "custom_attributes_value_jv4pbu03h": "{{msg.payload.tamanho}}",
+                "custom_attributes_field_a01hznxxx": "marca",
+                "custom_attributes_value_a01hznxxx": "{{msg.payload.marca}}",
+                "custom_attributes_field_2crctn949": "short_description",
+                "custom_attributes_value_2crctn949": "{{msg.short_description}}",
+                "status_custom": "{{msg.payload.status.toLowerCase() == \"active\" ? 1 : 2}}",
+                "extension_attributes": "{\"i20gvf7bu\":{\"field\":\"stock_item.enable_qty_increments\",\"value\":\"{{msg.payload.venda_incremento_quantidade ? true : false}}\"},\"51fw15l9z\":{\"field\":\"stock_item.qty_increments\",\"value\":\"{{msg.payload.venda_incremento_quantidade}}\"},\"fytco14kt\":{\"field\":\"stock_item.use_config_enable_qty_inc\",\"value\":\"0\"},\"xpwo71hnw\":{\"field\":\"stock_item.use_config_qty_increments\",\"value\":\"0\"}}",
+                "extension_attributes_field_i20gvf7bu": "stock_item.enable_qty_increments",
+                "extension_attributes_value_i20gvf7bu": "{{msg.payload.venda_incremento_quantidade ? true : false}}",
+                "extension_attributes_field_51fw15l9z": "stock_item.qty_increments",
+                "extension_attributes_value_51fw15l9z": "{{msg.payload.venda_incremento_quantidade}}",
+                "extension_attributes_field_fytco14kt": "stock_item.use_config_enable_qty_inc",
+                "extension_attributes_value_fytco14kt": "0",
+                "extension_attributes_field_xpwo71hnw": "stock_item.use_config_qty_increments",
+                "extension_attributes_value_xpwo71hnw": "0",
+                "category_ids": "{{msg.payload.categorias.map((a) => { return msg.categoriesMap[a] }).join(',')}}",
+                "website_ids": "{{msg.payload.website_ids.join(',')}}"
+            }
+        },
+        {
+            "uid": "9mkqmapph",
+            "type": "core_template",
+            "data": {
+                "x": 2882,
+                "y": 485,
+                "convert_json": "0",
+                "output_path": "short_description",
+                "content": "Itens deste kit:<br><br>\n{{#msg.payload.items_kit_simples}}\n- {{.}}<br>\n{{/msg.payload.items_kit_simples}}",
+                "description": "Gera a descrição curta com os itens do kit simples"
+            }
+        },
+        {
+            "uid": "327d2ym7y",
+            "type": "core_message_change",
+            "trigger": false,
+            "data": {
+                "x": -976,
+                "y": 414,
+                "description": "Move dados do produto",
+                "values": "{\"b24qek18i\":{\"type\":\"copy\",\"from\":\"msg.payload.body\",\"to\":\"msg.payload\"}}",
+                "values_from_b24qek18i": "msg.payload.body",
+                "values_to_b24qek18i": "msg.payload"
+            }
+        },
+        {
+            "uid": "wkp7iew9j",
+            "type": "data_json",
+            "data": {
+                "x": 1308,
+                "y": 106,
+                "mode": "from_json",
+                "content": "payload",
+                "description": "Converte JSON"
+            }
+        },
+        {
+            "uid": "dbmu130i7",
+            "type": "service_internal_db_entity_list",
+            "data": {
+                "x": -741,
+                "y": 397,
+                "page": "1",
+                "limit": "1000",
+                "table_id": "6448118254a824ae0b5eb3c5",
+                "filters": "{}",
+                "sort_order": "{}",
+                "description": "Consulta categorias sincronizadas para fazer um DE/PARA",
+                "output_path": "categories"
+            }
+        },
+        {
+            "uid": "sdgarvzea",
+            "type": "core_function",
+            "data": {
+                "x": -516,
+                "y": 397,
+                "code": "async function handler(msg){\n    msg.categoriesMap = {}\n\n    msg.categories.items.forEach((item) => {\n        msg.categoriesMap[item.data.codigo_roge] = item.data.magento_id\n    })\n\n    return msg;\n}",
+                "description": "Mapeamento de IDs de categorias no Magento"
+            }
+        },
+        {
+            "uid": "iib5tqwkx",
+            "type": "core_function",
+            "data": {
+                "x": 1356,
+                "y": 666,
+                "code": "async function handler(msg){\n    // Enviado como String com valore \"0\" ou \"1\"\n    msg.payload.kit_simples = parseInt(msg.payload.kit_simples) ? true : false\n\n    return msg;\n}",
+                "description": "Parse do valor numérico em String para campo kit_simples"
+            }
+        },
+        {
+            "uid": "zxdnebgjk",
+            "type": "core_split_message",
+            "data": {
+                "x": 900,
+                "y": 671,
+                "items": "payload",
+                "description": "Para cada produto recebido"
+            }
+        },
+        {
+            "uid": "nqrbnh83k",
+            "type": "core_delay",
+            "data": {
+                "x": 1145,
+                "y": 682,
+                "delay_in_seconds": "0.1"
+            }
+        },
+        {
+            "uid": "3hhxrnqmq",
+            "type": "core_function",
+            "data": {
+                "x": -38,
+                "y": 580,
+                "code": "async function handler(msg) {\n    var marcasExistentes = []\n    var marcasNovas = {}\n\n    msg.marcas_response.forEach((item) => {\n        if (item.label.trim()) {\n            marcasExistentes.push(item.label.toLowerCase())\n        }\n    })\n\n    // busca marcas não existentes ainda no Magento\n    msg.payload.forEach((item) => {\n        if (marcasExistentes.indexOf(item.marca.toLowerCase()) == -1) {\n            // marca ainda não existe\n            marcasNovas[item.marca] = 1\n        }\n    })\n\n    msg.marcasNovas = Object.keys(marcasNovas)\n    msg.marcasExistentes = marcasExistentes\n\n    return msg;\n}",
+                "description": "Separa marcas não existentes no atributo"
+            }
+        },
+        {
+            "uid": "340mx6flr",
+            "type": "service_generic_rest_api",
+            "data": {
+                "x": -258,
+                "y": 580,
+                "method": "get",
+                "content_type": "application/json",
+                "description": "Consulta marcas cadastradas",
+                "additional_headers": "{}",
+                "service_account_id": "6448127354a824ae0b5eb3f3",
+                "path": "/V1/products/attributes/marca/options",
+                "output_path": "marcas_response"
+            }
+        },
+        {
+            "uid": "1sub5kqzp",
+            "type": "core_split_message",
+            "data": {
+                "x": 178,
+                "y": 579,
+                "items": "marcasNovas",
+                "description": "Para cada nova marca",
+                "output_path": "marca"
+            }
+        },
+        {
+            "uid": "nqs9gjhtz",
+            "type": "service_generic_rest_api",
+            "data": {
+                "x": 427,
+                "y": 482,
+                "method": "post",
+                "content_type": "application/json",
+                "description": "Cadastra a nova marca",
+                "additional_headers": "{}",
+                "service_account_id": "6448127354a824ae0b5eb3f3",
+                "path": "/V1/products/attributes/marca/options",
+                "output_path": "novamarca_response",
+                "request_body": "{\n    \"option\": {\n        \"label\": \"{{msg.marca}}\"\n    }\n}"
+            }
+        },
+        {
+            "uid": "ku13qq0l8",
+            "type": "service_generic_rest_api",
+            "data": {
+                "x": 427,
+                "y": 670,
+                "method": "get",
+                "content_type": "application/json",
+                "description": "Recarrega marcas cadastradas",
+                "additional_headers": "{}",
+                "service_account_id": "6448127354a824ae0b5eb3f3",
+                "path": "/V1/products/attributes/marca/options",
+                "output_path": "marcas_response"
+            }
+        },
+        {
+            "uid": "no7aic1b2",
+            "type": "core_function",
+            "data": {
+                "x": 670,
+                "y": 672,
+                "code": "async function handler(msg) {\n    var marcasMapping = {}\n\n    // mapeia as marcas existentes\n    msg.marcas_response.forEach((item) => {\n        if (item.label.trim()) {\n            marcasMapping[item.label.toLowerCase()] = item.value\n        }\n    })\n\n    // realiza a transformação do DE/PARA\n    msg.payload.forEach((item) => {\n        if (item.marca && item.marca.trim()) {\n            item.marca = marcasMapping[item.marca.toLowerCase()]\n        }\n    })\n\n    return msg;\n}",
+                "description": "DE/PARA de marcas"
+            }
+        },
+        {
+            "uid": "nhv00pep7",
+            "type": "service_internal_db_entity_create",
+            "data": {
+                "x": 4584,
+                "y": 565,
+                "table_id": "64970a9028ab0695c493f2a0",
+                "fields": "{\"bu64dhqeu\":{\"field\":\"sku\",\"value\":\"{{msg.payload.ean}}\"},\"hvag98rj6\":{\"field\":\"message\",\"value\":\"{{json msg.product_response}}\"},\"myqwzjcfp\":{\"field\":\"payload\",\"value\":\"{{json msg.payload}}\"}}",
+                "description": "Insere na tabela de produtos não integrados para verificação posterior",
+                "fields_field_bu64dhqeu": "sku",
+                "fields_value_bu64dhqeu": "{{msg.payload.ean}}",
+                "fields_field_hvag98rj6": "message",
+                "fields_value_hvag98rj6": "{{json msg.product_response}}",
+                "fields_field_myqwzjcfp": "payload",
+                "fields_value_myqwzjcfp": "{{json msg.payload}}",
+                "output_path": "db_create"
+            }
+        },
+        {
+            "uid": "4xl1msypu",
+            "type": "core_logger",
+            "data": {
+                "x": -1226,
+                "y": 397,
+                "message_type": "msg_object",
+                "message": "Log message",
+                "label": "Payload de entrada do lote de produtos",
+                "description": "Log de entrada"
+            }
+        },
+        {
+            "uid": "wzab8exf0",
+            "type": "core_function",
+            "data": {
+                "x": 1590,
+                "y": 666,
+                "code": "async function handler(msg) {\n    msg.payload.website_ids = []\n\n    msg.payload.loja.forEach((item) => {\n        item = parseInt(item)\n\n        // Multimarcas\n        if (item == 1) {\n            msg.payload.website_ids.push(1)\n        }\n\n        // P&G\n        if (item == 2) {\n            msg.payload.website_ids.push(4)\n        }\n    })\n\n    return msg;\n}",
+                "description": "DE/PARA de lojas"
+            }
+        },
+        {
+            "uid": "eyydztx7f",
+            "type": "service_generic_rest_api",
+            "data": {
+                "x": 4378,
+                "y": 248,
+                "method": "post",
+                "content_type": "application/json",
+                "description": "Assina o produto ao catálogo \"default\"",
+                "additional_headers": "{}",
+                "service_account_id": "6448127354a824ae0b5eb3f3",
+                "path": "/all/V1/sharedCatalog/{{var default_catalog_staging}}/assignProducts",
+                "request_body": "{\n    \"products\": [\n        {\n            \"sku\": \"{{msg.payload.ean}}\"\n        }\n    ]\n}",
+                "output_path": "catalog_response"
+            }
+        },
+        {
+            "uid": "mq0wstrzm",
+            "type": "core_logger",
+            "data": {
+                "x": 4607,
+                "y": 247,
+                "message_type": "message_parsed_text",
+                "message": "{{json msg.catalog_response}}",
+                "label": "Retorno da aplicação do catálogo \"default\""
+            }
+        },
+        {
+            "uid": "l3pubwzvq",
+            "type": "service_magento_catalog_product_get",
+            "data": {
+                "x": 1867,
+                "y": 667,
+                "output_path": "current_product",
+                "service_account_id": "6448127354a824ae0b5eb3f3",
+                "sku": "{{msg.payload.ean}}"
+            }
+        },
+        {
+            "uid": "7rbunl7ki",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 2125,
+                "y": 785,
+                "expression": "msg.current_product.id",
+                "description": "Se o produto já existe, apenas atualiza"
+            }
+        },
+        {
+            "uid": "8oilctru5",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 2126,
+                "y": 520,
+                "expression": "!msg.current_product.id",
+                "description": "Se o produto não existe ainda, cria ele no Magento"
+            }
+        },
+        {
+            "uid": "p0t0s77hx",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 2650,
+                "y": 771,
+                "expression": "!msg.payload.kit_simples",
+                "description": "Se é um produto simples"
+            }
+        },
+        {
+            "uid": "i1jgxw1ls",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 2647,
+                "y": 965,
+                "expression": "msg.payload.kit_simples",
+                "description": "Se é um kit simples"
+            }
+        },
+        {
+            "uid": "9jz2hhybw",
+            "type": "core_template",
+            "data": {
+                "x": 2875,
+                "y": 948,
+                "convert_json": "0",
+                "output_path": "short_description",
+                "content": "Itens deste kit:<br><br>\n{{#msg.payload.items_kit_simples}}\n- {{.}}<br>\n{{/msg.payload.items_kit_simples}}",
+                "description": "Gera a descrição curta com os itens do kit simples"
+            }
+        },
+        {
+            "uid": "5eqou6qlz",
+            "type": "core_joint",
+            "trigger": false,
+            "data": {
+                "x": 2389,
+                "y": 862
+            }
+        },
+        {
+            "uid": "x0u02w5aq",
+            "type": "service_magento_catalog_product_update",
+            "data": {
+                "x": 3113,
+                "y": 754,
+                "description": "",
+                "native_attributes": "{\"pkmwjfoqf\":{\"field\":\"name\",\"value\":\"{{msg.payload.nome}}\"},\"zjwua7z71\":{\"field\":\"status\",\"value\":\"{{msg.payload.status.toLowerCase() == \\\"active\\\" ? 1 : 2}}\"},\"8zhhmbqgd\":{\"field\":\"weight\",\"value\":\"{{msg.payload.peso_bruto}}\"}}",
+                "custom_attributes": "{\"6ie2suuty\":{\"field\":\"codigo_roge\",\"value\":\"{{msg.payload.codigo_roge}}\"},\"g783ld9z8\":{\"field\":\"ncm\",\"value\":\"{{msg.payload.ncm}}\"},\"831e3ii2j\":{\"field\":\"marca\",\"value\":\"{{msg.payload.marca}}\"}}",
+                "extension_attributes": "{\"t2lsr8x8p\":{\"field\":\"stock_item.enable_qty_increments\",\"value\":\"{{to_boolean msg.payload.venda_incremento_quantidade ? true : false}}\"},\"c2811jcdy\":{\"field\":\"stock_item.qty_increments\",\"value\":\"{{to_int msg.payload.venda_incremento_quantidade}}\"},\"ndzdsq9n5\":{\"field\":\"stock_item.use_config_enable_qty_inc\",\"value\":\"0\"},\"ooq0qrb6b\":{\"field\":\"stock_item.use_config_qty_increments\",\"value\":\"0\"}}",
+                "native_attributes_field_v70eno519": "sku",
+                "native_attributes_field_3xhf3nor2": "price",
+                "native_attributes_field_zjwua7z71": "status",
+                "native_attributes_value_zjwua7z71": "{{msg.payload.status.toLowerCase() == \"active\" ? 1 : 2}}",
+                "native_attributes_value_pkmwjfoqf": "{{msg.payload.nome}}",
+                "sku": "{{msg.payload.ean}}",
+                "service_account_id": "6448127354a824ae0b5eb3f3",
+                "product_description": "{{msg.payload.descricao}}",
+                "website_ids": "{{msg.payload.website_ids.join(',')}}",
+                "native_attributes_field_8zhhmbqgd": "weight",
+                "native_attributes_value_8zhhmbqgd": "{{msg.payload.peso_bruto}}",
+                "store_view_code": "",
+                "category_ids": "{{msg.payload.categorias.map((a) => { return msg.categoriesMap[a] }).join(',')}}",
+                "custom_attributes_value_6ie2suuty": "{{msg.payload.codigo_roge}}",
+                "custom_attributes_field_6ie2suuty": "codigo_roge",
+                "custom_attributes_field_g783ld9z8": "ncm",
+                "custom_attributes_value_g783ld9z8": "{{msg.payload.ncm}}",
+                "custom_attributes_field_831e3ii2j": "marca",
+                "custom_attributes_value_831e3ii2j": "{{msg.payload.marca}}",
+                "extension_attributes_field_t2lsr8x8p": "stock_item.enable_qty_increments",
+                "extension_attributes_field_c2811jcdy": "stock_item.qty_increments",
+                "extension_attributes_field_ndzdsq9n5": "stock_item.use_config_enable_qty_inc",
+                "extension_attributes_field_ooq0qrb6b": "stock_item.use_config_qty_increments",
+                "extension_attributes_value_t2lsr8x8p": "{{to_boolean msg.payload.venda_incremento_quantidade ? true : false}}",
+                "extension_attributes_value_c2811jcdy": "{{to_int msg.payload.venda_incremento_quantidade}}",
+                "extension_attributes_value_ndzdsq9n5": "0",
+                "extension_attributes_value_ooq0qrb6b": "0",
+                "output_path": "product_response"
+            }
+        },
+        {
+            "uid": "ncdas04dg",
+            "type": "service_magento_catalog_product_update",
+            "data": {
+                "x": 3114,
+                "y": 948,
+                "description": "",
+                "native_attributes": "{\"pkmwjfoqf\":{\"field\":\"name\",\"value\":\"{{msg.payload.nome}}\"},\"zjwua7z71\":{\"field\":\"status\",\"value\":\"{{msg.payload.status.toLowerCase() == \\\"active\\\" ? 1 : 2}}\"},\"8zhhmbqgd\":{\"field\":\"weight\",\"value\":\"{{msg.payload.peso_bruto}}\"}}",
+                "custom_attributes": "{\"6ie2suuty\":{\"field\":\"codigo_roge\",\"value\":\"{{msg.payload.codigo_roge}}\"},\"g783ld9z8\":{\"field\":\"ncm\",\"value\":\"{{msg.payload.ncm}}\"},\"831e3ii2j\":{\"field\":\"marca\",\"value\":\"{{msg.payload.marca}}\"},\"99ybpq2r8\":{\"field\":\"short_description\",\"value\":\"{{msg.short_description}}\"}}",
+                "extension_attributes": "{\"t2lsr8x8p\":{\"field\":\"stock_item.enable_qty_increments\",\"value\":\"{{to_boolean msg.payload.venda_incremento_quantidade ? true : false}}\"},\"c2811jcdy\":{\"field\":\"stock_item.qty_increments\",\"value\":\"{{to_int msg.payload.venda_incremento_quantidade}}\"},\"ndzdsq9n5\":{\"field\":\"stock_item.use_config_enable_qty_inc\",\"value\":\"0\"},\"ooq0qrb6b\":{\"field\":\"stock_item.use_config_qty_increments\",\"value\":\"0\"}}",
+                "native_attributes_field_v70eno519": "sku",
+                "native_attributes_field_3xhf3nor2": "price",
+                "native_attributes_field_zjwua7z71": "status",
+                "native_attributes_value_zjwua7z71": "{{msg.payload.status.toLowerCase() == \"active\" ? 1 : 2}}",
+                "native_attributes_value_pkmwjfoqf": "{{msg.payload.nome}}",
+                "sku": "{{msg.payload.ean}}",
+                "service_account_id": "6448127354a824ae0b5eb3f3",
+                "product_description": "{{msg.payload.descricao}}",
+                "website_ids": "{{msg.payload.website_ids.join(',')}}",
+                "native_attributes_field_8zhhmbqgd": "weight",
+                "native_attributes_value_8zhhmbqgd": "{{msg.payload.peso_bruto}}",
+                "store_view_code": "",
+                "category_ids": "{{msg.payload.categorias.map((a) => { return msg.categoriesMap[a] }).join(',')}}",
+                "custom_attributes_value_6ie2suuty": "{{msg.payload.codigo_roge}}",
+                "custom_attributes_field_6ie2suuty": "codigo_roge",
+                "custom_attributes_field_g783ld9z8": "ncm",
+                "custom_attributes_value_g783ld9z8": "{{msg.payload.ncm}}",
+                "custom_attributes_field_831e3ii2j": "marca",
+                "custom_attributes_value_831e3ii2j": "{{msg.payload.marca}}",
+                "extension_attributes_field_t2lsr8x8p": "stock_item.enable_qty_increments",
+                "extension_attributes_field_c2811jcdy": "stock_item.qty_increments",
+                "extension_attributes_field_ndzdsq9n5": "stock_item.use_config_enable_qty_inc",
+                "extension_attributes_field_ooq0qrb6b": "stock_item.use_config_qty_increments",
+                "extension_attributes_value_t2lsr8x8p": "{{to_boolean msg.payload.venda_incremento_quantidade ? true : false}}",
+                "extension_attributes_value_c2811jcdy": "{{to_int msg.payload.venda_incremento_quantidade}}",
+                "extension_attributes_value_ndzdsq9n5": "0",
+                "extension_attributes_value_ooq0qrb6b": "0",
+                "custom_attributes_field_99ybpq2r8": "short_description",
+                "custom_attributes_value_99ybpq2r8": "{{msg.short_description}}",
+                "output_path": "product_response"
+            }
+        },
+        {
+            "uid": "hslksqd9z",
+            "type": "core_condition",
+            "trigger": false,
+            "data": {
+                "x": 4139,
+                "y": 265,
+                "expression": "!msg.current_product.id",
+                "description": "Se não é uma atualização do produto"
+            }
+        }
+    ],
+    "connections": [
+        {
+            "uid": "t00jij1g9",
+            "from": "ldusvjf8k",
+            "to": "jhi4vsvqm"
+        },
+        {
+            "uid": "inuvrwsbf",
+            "from": "y1a3qb5ik",
+            "to": "zj899shsa"
+        },
+        {
+            "uid": "9ymbhfcrt",
+            "from": "jhi4vsvqm",
+            "to": "uok9c4h6i"
+        },
+        {
+            "uid": "zdj8h0dr0",
+            "from": "jhi4vsvqm",
+            "to": "y1a3qb5ik"
+        },
+        {
+            "uid": "f2m2lojv4",
+            "from": "uok9c4h6i",
+            "to": "r4vxbpcom"
+        },
+        {
+            "uid": "qliyoy69k",
+            "from": "4svx3k1cg",
+            "to": "3sqinr7a4"
+        },
+        {
+            "uid": "0mrxzmzsl",
+            "from": "4svx3k1cg",
+            "to": "tukkxzrv3"
+        },
+        {
+            "uid": "iapeior2u",
+            "from": "dvyhpvyng",
+            "to": "hhec21eav"
+        },
+        {
+            "uid": "mw288t3u9",
+            "from": "3sqinr7a4",
+            "to": "t5318n64i"
+        },
+        {
+            "uid": "1rkmxnm7k",
+            "from": "tukkxzrv3",
+            "to": "geiax32ao"
+        },
+        {
+            "uid": "1sc4bum5h",
+            "from": "ztfl5it10",
+            "to": "7v5apixr2"
+        },
+        {
+            "uid": "pm4pz81gv",
+            "from": "ztfl5it10",
+            "to": "zcbl08epw"
+        },
+        {
+            "uid": "2hwdjyqcl",
+            "from": "z7h7hzxqi",
+            "to": "4svx3k1cg"
+        },
+        {
+            "uid": "56u01fvhf",
+            "from": "z7h7hzxqi",
+            "to": "dvyhpvyng"
+        },
+        {
+            "uid": "vdwge42xj",
+            "from": "0h94s67vw",
+            "to": "z7h7hzxqi"
+        },
+        {
+            "uid": "g1f70vkqn",
+            "from": "nf6z8wgoa",
+            "to": "z7h7hzxqi"
+        },
+        {
+            "uid": "djm7yxqlb",
+            "from": "9mkqmapph",
+            "to": "nf6z8wgoa"
+        },
+        {
+            "uid": "qp7w6fttk",
+            "from": "zcbl08epw",
+            "to": "9mkqmapph"
+        },
+        {
+            "uid": "90asgo2j2",
+            "from": "7v5apixr2",
+            "to": "0h94s67vw"
+        },
+        {
+            "uid": "4z9m5vhn8",
+            "from": "xr0rhkue2",
+            "to": "wkp7iew9j"
+        },
+        {
+            "uid": "0wncack8p",
+            "from": "dbmu130i7",
+            "to": "sdgarvzea"
+        },
+        {
+            "uid": "d30cfk9j1",
+            "from": "327d2ym7y",
+            "to": "dbmu130i7"
+        },
+        {
+            "uid": "vxg4fkmuq",
+            "from": "zxdnebgjk",
+            "to": "nqrbnh83k"
+        },
+        {
+            "uid": "i9802mzy0",
+            "from": "nqrbnh83k",
+            "to": "iib5tqwkx"
+        },
+        {
+            "uid": "977dj2izx",
+            "from": "340mx6flr",
+            "to": "3hhxrnqmq"
+        },
+        {
+            "uid": "hzpxbjh95",
+            "from": "sdgarvzea",
+            "to": "340mx6flr"
+        },
+        {
+            "uid": "51n80f82l",
+            "from": "3hhxrnqmq",
+            "to": "1sub5kqzp"
+        },
+        {
+            "uid": "hpxfo4ja1",
+            "from": "1sub5kqzp",
+            "to": "nqs9gjhtz"
+        },
+        {
+            "uid": "m2sjfqemh",
+            "from": "1sub5kqzp_on_end",
+            "to": "ku13qq0l8"
+        },
+        {
+            "uid": "23ues2njx",
+            "from": "ku13qq0l8",
+            "to": "no7aic1b2"
+        },
+        {
+            "uid": "xuj7or9g2",
+            "from": "no7aic1b2",
+            "to": "zxdnebgjk"
+        },
+        {
+            "uid": "mgmr5dstx",
+            "from": "geiax32ao",
+            "to": "nhv00pep7"
+        },
+        {
+            "uid": "ynzchgzb7",
+            "from": "uok9c4h6i",
+            "to": "4xl1msypu"
+        },
+        {
+            "uid": "wl253ugcj",
+            "from": "4xl1msypu",
+            "to": "327d2ym7y"
+        },
+        {
+            "uid": "axx1xmwxm",
+            "from": "iib5tqwkx",
+            "to": "wzab8exf0"
+        },
+        {
+            "uid": "uhxvqa2rz",
+            "from": "eyydztx7f",
+            "to": "mq0wstrzm"
+        },
+        {
+            "uid": "5h8gv0uh9",
+            "from": "wzab8exf0",
+            "to": "l3pubwzvq"
+        },
+        {
+            "uid": "dyrt4fidc",
+            "from": "l3pubwzvq",
+            "to": "7rbunl7ki"
+        },
+        {
+            "uid": "8ucbcngwu",
+            "from": "l3pubwzvq",
+            "to": "8oilctru5"
+        },
+        {
+            "uid": "swbsfqqh4",
+            "from": "wkp7iew9j",
+            "to": "l3pubwzvq"
+        },
+        {
+            "uid": "9ikg2ucr2",
+            "from": "8oilctru5",
+            "to": "ztfl5it10"
+        },
+        {
+            "uid": "qp7w6fttk",
+            "from": "i1jgxw1ls",
+            "to": "9jz2hhybw"
+        },
+        {
+            "uid": "rarkv91pi",
+            "from": "7rbunl7ki",
+            "to": "5eqou6qlz"
+        },
+        {
+            "uid": "q344045h9",
+            "from": "5eqou6qlz",
+            "to": "p0t0s77hx"
+        },
+        {
+            "uid": "ytzcafyr3",
+            "from": "5eqou6qlz",
+            "to": "i1jgxw1ls"
+        },
+        {
+            "uid": "xz1p103ne",
+            "from": "p0t0s77hx",
+            "to": "x0u02w5aq"
+        },
+        {
+            "uid": "bbo3xpw1y",
+            "from": "9jz2hhybw",
+            "to": "ncdas04dg"
+        },
+        {
+            "uid": "k46gndnoi",
+            "from": "x0u02w5aq",
+            "to": "z7h7hzxqi"
+        },
+        {
+            "uid": "455qzedrr",
+            "from": "ncdas04dg",
+            "to": "z7h7hzxqi"
+        },
+        {
+            "uid": "38r8o68jj",
+            "from": "4svx3k1cg",
+            "to": "hslksqd9z"
+        },
+        {
+            "uid": "egd0ed08m",
+            "from": "hslksqd9z",
+            "to": "eyydztx7f"
+        }
+    ],
+    "data": {
+        "zoom": 1,
+        "x": -442,
+        "y": -276,
+        "exported_at": "2024-02-23 12:34:52"
+    },
+    "variables": []
+}
