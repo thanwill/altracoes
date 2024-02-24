@@ -9,7 +9,6 @@
                 <span class="badge text-bg-primary rounded-pill">26</span>
             </li>
         </ol>
-        <hr class="mb-5">
         <div class="mb-4">
             <label for="formFileMultiple" class="form-label">Adicionar fluxos</label>
             <input class="form-control" type="file" id="formFileMultiple" multiple>

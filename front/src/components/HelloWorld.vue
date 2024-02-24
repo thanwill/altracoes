@@ -13,6 +13,18 @@
 
     <main class="container-fluid mt-5 col-sm-10 offset-sm-1">
       <div class="row">
+        <section class="col-md-4">
+            <div>
+              <h2 class="text-start mb-4 text-body-secondary">
+                <i class="bi bi-funnel"></i> 
+                Filtros</h2>
+              <article>
+                <FiltersEnvironment />
+                <ClientList />
+              </article>
+            </div>
+
+          </section>
         <aside class="col-sm-12 col-md-8">
           <h2 class="text-start mb-4">Fluxos</h2>
           <div>
@@ -20,16 +32,7 @@
             </FlowList>
           </div>
         </aside>
-        <section class="col-md-4">
-          <div>
-            <h2 class="text-start mb-4">Filtros</h2>
-            <article>
-              <FiltersEnvironment />
-              <ClientList />
-            </article>
-          </div>
-
-        </section>
+        
       </div>
     </main>
 
