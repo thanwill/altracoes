@@ -1,5 +1,6 @@
 [
     {
+        "ambiente": "production",
         "arquivo": "production-atualizao-em-massa-de-estoque",
         "loggers": [
             {
@@ -20,10 +21,12 @@
         ]
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-retentativa-de-integrao-de-pedidos",
         "loggers": []
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-clientes-reprovados",
         "loggers": [
             {
@@ -94,6 +97,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-clientes-aprovados-v2",
         "loggers": [
             {
@@ -144,10 +148,12 @@
         ]
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-b2list-filiais",
         "loggers": []
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-integrao-de-novos-pedidos-v6",
         "loggers": [
             {
@@ -183,6 +189,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-sincronizao-de-categorias",
         "loggers": [
             {
@@ -238,6 +245,7 @@
         ]
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-upsert-de-produtos-em-lote",
         "loggers": [
             {
@@ -263,6 +271,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-clientes-reprovados",
         "loggers": [
             {
@@ -313,6 +322,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-atualizao-de-pedidos-v2",
         "loggers": [
             {
@@ -348,6 +358,7 @@
         ]
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-sincronizao-de-categorias",
         "loggers": [
             {
@@ -398,10 +409,12 @@
         ]
     },
     {
+        "ambiente": "teste",
         "arquivo": "teste-consulta-pedido",
         "loggers": []
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-atualizao-de-pedidos-v2",
         "loggers": [
             {
@@ -437,6 +450,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-upsert-de-produtos-em-lote",
         "loggers": [
             {
@@ -462,6 +476,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-integrao-de-novos-pedidos-v6",
         "loggers": [
             {
@@ -497,6 +512,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-prcadastro-de-clientes-em-landing-pages-externas-proxy-para-prcadastro",
         "loggers": [
             {
@@ -507,6 +523,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-prcadastro-de-clientes",
         "loggers": [
             {
@@ -542,6 +559,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-atualizao-de-clientes-v4",
         "loggers": [
             {
@@ -592,10 +610,12 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-retentativa-de-integrao-de-pedidos",
         "loggers": []
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-atualizao-de-clientes-v4",
         "loggers": [
             {
@@ -641,6 +661,7 @@
         ]
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-clientes-aprovados-v3",
         "loggers": [
             {
@@ -706,6 +727,7 @@
         ]
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-prcadastro-de-clientes",
         "loggers": [
             {
@@ -736,6 +758,7 @@
         ]
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-atualizao-em-massa-de-estoque",
         "loggers": [
             {
@@ -766,6 +789,7 @@
         ]
     },
     {
+        "ambiente": "staging",
         "arquivo": "staging-integrao-de-tabelas-de-preos-v2",
         "loggers": [
             {
@@ -846,6 +870,7 @@
         ]
     },
     {
+        "ambiente": "production",
         "arquivo": "production-integrao-de-tabelas-de-preo-v4",
         "loggers": [
             {

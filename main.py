@@ -28,7 +28,7 @@ def verificar_tipo_core_logger(objeto):
 def ler_diretorio():
     # Lista todos os arquivos no diretório
     arquivos = os.listdir("./flows/")
-    print("Arquivos disponíveis:")
+    
     dados = []
     for arquivo in arquivos:
         dado = ler_arquivo(f"./flows/{arquivo}")
@@ -39,12 +39,11 @@ def ler_diretorio():
     return dados
 
 def ler_arquivo(caminho_arquivo):
-     
-    print(f"Arquivo escolhido: {caminho_arquivo}")
+         
     conteudo = json.load(open(caminho_arquivo))
     # nomeio o objeto json com o nome do arquivo escolhido
     # staging-sincronizao-de-categorias-20240223173739
-    nome_arquivo = caminho_arquivo.split('/')[-1].split('.')[0]
+    nome_arquivo = caminho_arquivo.split('/')[-1].split('.')[0]    
     dados = {}
     loggers = []
     
@@ -52,7 +51,7 @@ def ler_arquivo(caminho_arquivo):
     for objeto in conteudo['nodes']:
         if verificar_tipo_core_logger(objeto):
             # retorna os atributos uid, type, data.label
-            uid = objeto['uid']
+            uid = objeto['uid']            
             tipo = objeto['type']
             if 'data' in objeto:
                 if 'label' in objeto['data']:
@@ -60,6 +59,7 @@ def ler_arquivo(caminho_arquivo):
                 else:
                     label = ''
             loggers.append({'uid': uid, 'type': tipo, 'label': label.encode('utf-8').decode('utf-8')})
+    dados['ambiente'] = nome_arquivo.split('-')[0]
     dados['loggers'] = loggers
     dados['arquivo'] = '-'.join(nome_arquivo.split('-')[:-1])
     return dados

@@ -1,24 +1,34 @@
 <template>
   <div>
-    <header class="">
-      <h1>Relação de loggers por fluxo</h1>
+    <header>
+      <nav class="navbar bg-body-tertiary p-3">
+        <div class="container-md">
+          <a class="navbar-brand" href="#">
+            <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">
+            Relação de loggers por fluxo
+          </a>
+        </div>
+      </nav>
     </header>
 
-    <main class="container mt-5 col-sm-10 col-md-10 col-lg-8">
+    <main class="container-fluid mt-5 col-sm-10 offset-sm-1">
       <div class="row">
         <aside class="col-sm-12 col-md-8">
-          <h2>Fluxos</h2>
-          <div class="mt-3">
-            <FlowList v-for="(flow, index) in flows" :key="index" :id="'collapse' + index" :arquivo="flow.arquivo"
-              :loggers="flow.loggers">
+          <h2 class="text-start mb-4">Fluxos</h2>
+          <div>
+            <FlowList v-for="(flow, index) in flows" :key="index" :flowData="{ ...flow, id: 'collapse' + index }">
             </FlowList>
           </div>
         </aside>
         <section class="col-md-4">
-          <h3>Ambientes</h3>
-          <article class="mt-3">
-            <client-list></client-list>
-          </article>
+          <div>
+            <h2 class="text-start mb-4">Ambientes</h2>
+            <article>
+              <FiltersEnvironment />
+              <ClientList />
+            </article>
+          </div>
+
         </section>
       </div>
     </main>
@@ -33,8 +43,9 @@
 <script>
 import ClientList from './ClientList.vue'
 import FlowList from './FlowList.vue'
+import FiltersEnvironment from './FiltersEnv.vue'
 export default {
-  components: { ClientList, FlowList },
+  components: { ClientList, FlowList, FiltersEnvironment },
   name: 'HelloWorld',
   props: {
     msg: String,
