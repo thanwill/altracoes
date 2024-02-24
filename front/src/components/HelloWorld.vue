@@ -1,14 +1,15 @@
 <template>
   <div>
+    <nav class="navbar bg-body-tertiary p-3">
+          <div class="container-md">
+            <a class="navbar-brand" href="#">
+              <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">
+              Relação de loggers por fluxo
+            </a>
+          </div>
+        </nav>
     <header>
-      <nav class="navbar bg-body-tertiary p-3">
-        <div class="container-md">
-          <a class="navbar-brand" href="#">
-            <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">
-            Relação de loggers por fluxo
-          </a>
-        </div>
-      </nav>
+      
     </header>
 
     <main class="container-fluid mt-5 col-sm-10 offset-sm-1">

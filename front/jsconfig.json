@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "module": "esnext",
     "baseUrl": "./",
     "moduleResolution": "node",
     "paths": {
       "@/*": [
-        "src/*"
+        "src/*",
+        "components/*"
       ]
     },
     "lib": [
@@ -15,5 +16,9 @@
       "dom.iterable",
       "scripthost"
     ]
-  }
+  },
+  "include": [
+    "src/**/*.vue",
+    "src/**/*.js"
+  ]
 }

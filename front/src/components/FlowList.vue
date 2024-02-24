@@ -4,12 +4,14 @@
             <div class="accordion-item mb-3">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + id"
-                        aria-expanded="false" :aria-controls="id">
-                        <span class="badge rounded-pill" :class="{ 'text-bg-danger': ambiente !== 'staging', 'text-bg-success': ambiente === 'staging' }">{{ ambiente }}</span>
+                        aria-expanded="true" :aria-controls="id">
+                        <span class="badge rounded-pill"
+                            :class="{ 'text-bg-danger': ambiente !== 'staging', 'text-bg-success': ambiente === 'staging' }">{{
+                                ambiente }}</span>
                         {{ arquivo }}
                     </button>
                 </h2>
-                <div :id="id" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div :id="id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <table class="table">
                             <thead>
