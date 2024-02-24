@@ -25,15 +25,18 @@ def verificar_tipo_core_logger(objeto):
             return True
     return False
 
-def ler_diretorio():
+def ler_diretorio(cliente):
     # Lista todos os arquivos no diretório
     arquivos = os.listdir("./flows/")
+    
+    # limpa a string cliente
+    cliente = cliente.replace(' ', '')
     
     dados = []
     for arquivo in arquivos:
         dado = ler_arquivo(f"./flows/{arquivo}")
         dados.append(dado)
-    with open('loggers.json', 'w') as f:
+    with open(cliente+'-loggers.json', 'w') as f:
         json.dump(dados, f, ensure_ascii=False, indent=4, sort_keys=True)
     print("Quantidade de arquivos listados: ", len(arquivos))
     return dados
@@ -64,24 +67,12 @@ def ler_arquivo(caminho_arquivo):
     dados['arquivo'] = '-'.join(nome_arquivo.split('-')[:-1])
     return dados
 
-def atualizar_loggers(loggers):
-    
-    # pergunta ao usuario um nome para o arquivo
-    # salva o nome do arquivo e os loggers em um arquivo json
-    
-    print("Ambiente:")
-    nome_arquivo = input()
-    
-    with open(nome_arquivo+'loggers.json', 'r') as f:
-        data = json.load(f)
-    data[loggers['arquivo']] = loggers['loggers']
-    with open('loggers.json', 'w') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4, sort_keys=True)
-    return data
 
 try:
     print("Iniciando")
-    ler_diretorio()
+    print("Defina um nome de cliente")
+    cliente = input()
+    ler_diretorio(cliente)
     print("Finalizado")
 except Exception as e:
     print(f"Erro: {e}")

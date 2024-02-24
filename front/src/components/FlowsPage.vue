@@ -1,22 +1,24 @@
 <template>
   <div>
-    <header>
-      <nav class="navbar bg-body-tertiary p-3">
-        <div class="container-md">
-          <a class="navbar-brand" href="#">
-            <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">
-            Relação de loggers por fluxo
-          </a>
-        </div>
-      </nav>
-    </header>
 
     <main class="container-fluid mt-5 col-sm-10 offset-sm-1">
+      <header>
+        <nav class="navbar bg-body-tertiary mb-5 p-4">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+              <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">              
+            </a>
+            <div class="col"></div>
+            <span class="">Relação de loggers por fluxo</span>
+            <div class="col"></div>
+          </div>
+        </nav>
+      </header>
       <div class="row">
         <section class="col-md-4">
           <div>
             <h2 class="text-start mb-4 text-body-secondary">
-              <i class="bi bi-funnel"></i>
+              <i class="bi bi-funnel me-3 " style="font-size: 1.5rem;"></i>
               Filtros
             </h2>
             <article>
@@ -30,7 +32,7 @@
           <h2 class="text-start mb-4">Fluxos</h2>
           <div>
             <FlowSearch @search="searchFlows" />
-            <FlowList :filters="filters" :flowData="flows"/>
+            <FlowList :filters="filters" :flowData="flows" />
           </div>
         </aside>
       </div>
@@ -66,7 +68,7 @@ export default {
   methods: {
     async getJsonData(jsonFile) {
       const response = await fetch(`/database/${jsonFile}.json`);
-      const data = await response.json();      
+      const data = await response.json();
       return data;
     },
     filtrosAplicados(filtros) {
@@ -78,7 +80,7 @@ export default {
   },
   async created() {
     this.flows = await this.getJsonData('roge_loggers');
-  
+
   }
 
 }
