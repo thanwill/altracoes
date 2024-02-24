@@ -3,11 +3,11 @@
         <div class="accordion" id="accordionExample">
             <div class="accordion-item mb-3">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + id"
-                        aria-expanded="true" :aria-controls="id">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + id" aria-expanded="false" :aria-controls="id">
                         <span class="badge rounded-pill"
-                            :class="{ 'text-bg-danger': ambiente !== 'staging', 'text-bg-success': ambiente === 'staging' }">{{
-                                ambiente }}</span>
+                            :class="{ 'text-bg-danger': ambiente !== 'staging', 'text-bg-success': ambiente === 'staging' }">
+                            {{ ambiente }}
+                        </span>
                         {{ arquivo }}
                     </button>
                 </h2>

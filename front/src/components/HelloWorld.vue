@@ -1,31 +1,31 @@
 <template>
   <div>
-    <nav class="navbar bg-body-tertiary p-3">
-          <div class="container-md">
-            <a class="navbar-brand" href="#">
-              <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">
-              Relação de loggers por fluxo
-            </a>
-          </div>
-        </nav>
     <header>
-      
+      <nav class="navbar bg-body-tertiary p-3">
+        <div class="container-md">
+          <a class="navbar-brand" href="#">
+            <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">
+            Relação de loggers por fluxo
+          </a>
+        </div>
+      </nav>
     </header>
 
     <main class="container-fluid mt-5 col-sm-10 offset-sm-1">
       <div class="row">
         <section class="col-md-4">
-            <div>
-              <h2 class="text-start mb-4 text-body-secondary">
-                <i class="bi bi-funnel"></i> 
-                Filtros</h2>
-              <article>
-                <FiltersEnvironment />
-                <ClientList />
-              </article>
-            </div>
+          <div>
+            <h2 class="text-start mb-4 text-body-secondary">
+              <i class="bi bi-funnel"></i>
+              Filtros
+            </h2>
+            <article>
+              <FiltersEnvironment />
+              <ClientList />
+            </article>
+          </div>
 
-          </section>
+        </section>
         <aside class="col-sm-12 col-md-8">
           <h2 class="text-start mb-4">Fluxos</h2>
           <div>
@@ -33,7 +33,7 @@
             </FlowList>
           </div>
         </aside>
-        
+
       </div>
     </main>
 
