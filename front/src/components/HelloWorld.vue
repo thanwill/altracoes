@@ -22,7 +22,7 @@
         </aside>
         <section class="col-md-4">
           <div>
-            <h2 class="text-start mb-4">Ambientes</h2>
+            <h2 class="text-start mb-4">Filtros</h2>
             <article>
               <FiltersEnvironment />
               <ClientList />
