@@ -20,7 +20,7 @@
               Filtros
             </h2>
             <article>
-              <FiltersEnvironment />
+              <FlowFilters @filter="filtrosAplicados" />
               <ClientList />
             </article>
           </div>
@@ -29,11 +29,10 @@
         <aside class="col-sm-12 col-md-8">
           <h2 class="text-start mb-4">Fluxos</h2>
           <div>
-            <FlowList v-for="(flow, index) in flows" :key="index" :flowData="{ ...flow, id: 'collapse' + index }">
-            </FlowList>
+            <FlowSearch @search="searchFlows" />
+            <FlowList :filters="filters" :flowData="flows"/>
           </div>
         </aside>
-
       </div>
     </main>
 
@@ -47,10 +46,11 @@
 <script>
 import ClientList from './ClientList.vue'
 import FlowList from './FlowList.vue'
-import FiltersEnvironment from './FiltersEnv.vue'
+import FlowFilters from './FlowFilters.vue'
+import FlowSearch from './FlowSearch.vue'
 export default {
-  components: { ClientList, FlowList, FiltersEnvironment },
-  name: 'HelloWorld',
+  components: { ClientList, FlowList, FlowFilters, FlowSearch },
+  name: 'FlowPage',
   props: {
     msg: String,
 
@@ -58,19 +58,27 @@ export default {
   data() {
     return {
       flows: [],
-      clients: []
+      clients: [],
+      filters: [],
+      search: ''
     }
   },
   methods: {
     async getJsonData(jsonFile) {
       const response = await fetch(`/database/${jsonFile}.json`);
-      const data = await response.json();
-      console.log(data);
+      const data = await response.json();      
       return data;
+    },
+    filtrosAplicados(filtros) {
+      this.filters = filtros;
+    },
+    searchFlows(search) {
+      this.search = search;
     }
   },
   async created() {
     this.flows = await this.getJsonData('roge_loggers');
+  
   }
 
 }
