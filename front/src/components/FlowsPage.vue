@@ -2,18 +2,7 @@
   <div>
 
     <main class="container-fluid mt-5 col-sm-10 offset-sm-1">
-      <header>
-        <nav class="navbar bg-body-tertiary mb-5 p-4">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-              <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">
-            </a>
-            <div class="col"></div>
-            <span class="">Relação de loggers por fluxo</span>
-            <div class="col"></div>
-          </div>
-        </nav>
-      </header>
+      
       <div class="row">
         <section class="col-md-4">
           <div>
