@@ -2,6 +2,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-atualizao-em-massa-de-estoque",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Sucesso - Adobe Commerce - Integração de estoque",
@@ -23,11 +24,13 @@
     {
         "ambiente": "staging",
         "arquivo": "staging-retentativa-de-integrao-de-pedidos",
+        "cliente": "roge",
         "loggers": []
     },
     {
         "ambiente": "staging",
         "arquivo": "staging-clientes-reprovados",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Sucesso - Adobe Commerce - Empresa com status rejeitado",
@@ -99,6 +102,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-clientes-aprovados-v2",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Sucesso - Adobe Commerce - Criação de empresa",
@@ -150,11 +154,13 @@
     {
         "ambiente": "staging",
         "arquivo": "staging-b2list-filiais",
+        "cliente": "roge",
         "loggers": []
     },
     {
         "ambiente": "staging",
         "arquivo": "staging-integrao-de-novos-pedidos-v6",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "",
@@ -191,6 +197,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-sincronizao-de-categorias",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Erro ao tentar inserir categoria \"{{msg.payload.nome}}\" código \"{{msg.payload.codigo_roge}}\" no Magento",
@@ -247,6 +254,7 @@
     {
         "ambiente": "staging",
         "arquivo": "staging-upsert-de-produtos-em-lote",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "",
@@ -273,6 +281,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-clientes-reprovados",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Erro - Adobe Commerce - Criação de cliente",
@@ -324,6 +333,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-atualizao-de-pedidos-v2",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Sucesso - Adobe Commerce - Atualização de pedido",
@@ -360,6 +370,7 @@
     {
         "ambiente": "staging",
         "arquivo": "staging-sincronizao-de-categorias",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "",
@@ -411,11 +422,13 @@
     {
         "ambiente": "teste",
         "arquivo": "teste-consulta-pedido",
+        "cliente": "roge",
         "loggers": []
     },
     {
         "ambiente": "staging",
         "arquivo": "staging-atualizao-de-pedidos-v2",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Sucesso - Adobe Commerce - Atualização de pedido",
@@ -452,6 +465,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-upsert-de-produtos-em-lote",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "",
@@ -478,6 +492,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-integrao-de-novos-pedidos-v6",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Erro - ERP - Tentativas excedidas",
@@ -514,6 +529,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-prcadastro-de-clientes-em-landing-pages-externas-proxy-para-prcadastro",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Pré-cadastro da Landing Page redirecionado para ERP",
@@ -525,6 +541,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-prcadastro-de-clientes",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Erro - ERP - Número de tentativas de integração excedidas",
@@ -561,6 +578,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-atualizao-de-clientes-v4",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Sucesso - Adobe Commerce - Atualização de empresa",
@@ -612,11 +630,13 @@
     {
         "ambiente": "production",
         "arquivo": "production-retentativa-de-integrao-de-pedidos",
+        "cliente": "roge",
         "loggers": []
     },
     {
         "ambiente": "staging",
         "arquivo": "staging-atualizao-de-clientes-v4",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Sucesso - Adobe Commerce - Atualizar empresa",
@@ -663,6 +683,7 @@
     {
         "ambiente": "staging",
         "arquivo": "staging-clientes-aprovados-v3",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Sucesso - Adobe Commerce - Criar empresa",
@@ -729,6 +750,7 @@
     {
         "ambiente": "staging",
         "arquivo": "staging-prcadastro-de-clientes",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Erro - ERP - Números de tentativas excedidas",
@@ -760,6 +782,7 @@
     {
         "ambiente": "staging",
         "arquivo": "staging-atualizao-em-massa-de-estoque",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "",
@@ -791,6 +814,7 @@
     {
         "ambiente": "staging",
         "arquivo": "staging-integrao-de-tabelas-de-preos-v2",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Lote de preços integrados para loja 1 (Multimarcas)",
@@ -872,6 +896,7 @@
     {
         "ambiente": "production",
         "arquivo": "production-integrao-de-tabelas-de-preo-v4",
+        "cliente": "roge",
         "loggers": [
             {
                 "label": "Lote de preços integrados para loja 1 (Multimarcas)",

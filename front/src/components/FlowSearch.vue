@@ -4,7 +4,7 @@
             <div class="container-fluid">                
                 <form class="d-flex" role="search">
                     <input v-model="search" class="form-control me-5 col-sm-8" type="search" placeholder="Procurar por fluxos" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+                    <button class="btn btn-outline-success" type="submit">Limpar</button>
                 </form>
             </div>
         </nav>
@@ -19,8 +19,14 @@ export default {
         }
     }, 
     watch: {
+        
         search: function (newSearch) {
-            this.$emit('search', newSearch)
+            // verifica se não está vazia
+            if (newSearch.length > 0) {
+                this.$emit('search', newSearch);
+            } else {
+                this.$emit('search', '');
+            }
         }
     }
     

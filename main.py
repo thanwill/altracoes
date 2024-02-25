@@ -34,14 +34,14 @@ def ler_diretorio(cliente):
     
     dados = []
     for arquivo in arquivos:
-        dado = ler_arquivo(f"./flows/{arquivo}")
+        dado = ler_arquivo(f"./flows/{arquivo}", cliente)
         dados.append(dado)
     with open(cliente+'-loggers.json', 'w') as f:
         json.dump(dados, f, ensure_ascii=False, indent=4, sort_keys=True)
     print("Quantidade de arquivos listados: ", len(arquivos))
     return dados
 
-def ler_arquivo(caminho_arquivo):
+def ler_arquivo(caminho_arquivo, cliente):
          
     conteudo = json.load(open(caminho_arquivo))
     # nomeio o objeto json com o nome do arquivo escolhido
@@ -65,6 +65,7 @@ def ler_arquivo(caminho_arquivo):
     dados['ambiente'] = nome_arquivo.split('-')[0]
     dados['loggers'] = loggers
     dados['arquivo'] = '-'.join(nome_arquivo.split('-')[:-1])
+    dados['cliente'] = cliente
     return dados
 
 

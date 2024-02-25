@@ -6,7 +6,7 @@
         <nav class="navbar bg-body-tertiary mb-5 p-4">
           <div class="container-fluid">
             <a class="navbar-brand" href="#">
-              <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">              
+              <img src="/floui-logo.svg" alt="Logo" width="200" height="24" class="d-inline-block align-text-top">
             </a>
             <div class="col"></div>
             <span class="">Relação de loggers por fluxo</span>
@@ -23,7 +23,7 @@
             </h2>
             <article>
               <FlowFilters @filter="filtrosAplicados" />
-              <ClientList />
+              <ClientList :clients="clients" />
             </article>
           </div>
 
@@ -32,14 +32,13 @@
           <h2 class="text-start mb-4">Fluxos</h2>
           <div>
             <FlowSearch @search="searchFlows" />
-            <FlowList :filters="filters" :flowData="flows" />
+            <FlowList :filters="filters" :searchName="search" :flowData="flows" />
           </div>
         </aside>
       </div>
     </main>
 
     <body>
-
 
     </body>
   </div>
@@ -76,10 +75,39 @@ export default {
     },
     searchFlows(search) {
       this.search = search;
+    },
+    obterClientes(flows){
+      const clientes = [];
+      const objetosPorCliente = {};
+
+      for (const objeto of flows) {
+        const cliente = objeto.cliente;
+
+        if (!(cliente in objetosPorCliente)) {
+          objetosPorCliente[cliente] = 0;
+        }
+
+        objetosPorCliente[cliente]++;
+
+        if (!clientes.includes(cliente)) {
+          clientes.push(cliente);
+        }
+      }
+
+      const resultado = clientes.map(cliente => {
+        return {
+          nome: cliente,
+          contagem: objetosPorCliente[cliente],
+        };
+      });
+
+      return resultado;
     }
   },
   async created() {
     this.flows = await this.getJsonData('roge_loggers');
+
+    this.clients = this.obterClientes(this.flows);
 
   }
 
