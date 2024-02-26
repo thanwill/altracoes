@@ -9,10 +9,10 @@
                 <div class="col"></div>
                 <span>{{ msg }}</span>
                 <div class="col">
-                <nav>
-                    <router-link to="/">Home</router-link> |
-                    <router-link to="/about">About</router-link>
-                </nav>
+                    <nav class="text-center" >
+                        <router-link to="/">Home</router-link> |
+                        <router-link to="/about">About</router-link>
+                    </nav>
                 </div>
             </div>
             </nav>
@@ -29,8 +29,8 @@ export default {
 }
 </script>
 <style lang="css">
-    span {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
+span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
 </style>

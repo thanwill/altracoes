@@ -12,9 +12,6 @@ module.exports = defineConfig({
       })
     ],
   },
-  define:{
-    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__ : 'true'
-  },
   transpileDependencies: true,
   publicPath: process.env.NODE_ENV === 'production'
     ? '/front/'

@@ -3,7 +3,7 @@
 <template>
   
   <div id="app">
-    <HeaderPage msg="Relação de loggers por fluxo" />    
+    <HeaderPage msg="" />    
     <router-view />
   </div>
   
@@ -15,7 +15,12 @@ export default {
     name: 'App',
     components: {
         HeaderPage
-    }
+    }, 
+    data() {
+        return {
+            token: ''
+        }
+    },
 
 }
 </script>
@@ -25,7 +30,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
