@@ -99,7 +99,7 @@ export default {
     }
   },
   async created() {
-    this.flows = await this.getJsonData('roge_loggers');
+    this.flows = await this.getJsonData('fokusfit-loggers');
 
     this.clients = this.obterClientes(this.flows);
 
